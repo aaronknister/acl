@@ -33,7 +33,9 @@
 
 /* 23.4.22 */
 int
-acl_set_file(const char *path_p, acl_type_t type, acl_t acl)
+__acl_set_file(const char *path_p, acl_type_t type, acl_t acl,
+   	       ssize_t (*setxattr_fun)(const char *, const char *,
+				   void *, size_t))
 {
 	acl_obj *acl_obj_p = ext2int(acl, acl);
 	char *ext_acl_p;
@@ -58,7 +60,7 @@ acl_set_file(const char *path_p, acl_type_t type, acl_t acl)
 	ext_acl_p = __acl_to_xattr(acl_obj_p, &size);
 	if (!ext_acl_p)
 		return -1;
-	error = setxattr(path_p, name, (char *)ext_acl_p, size, 0);
+	error = setxattr_fun(path_p, name, (char *)ext_acl_p, size, 0);
 	free(ext_acl_p);
 	return error;
 }

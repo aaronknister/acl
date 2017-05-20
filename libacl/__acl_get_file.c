@@ -33,7 +33,10 @@
 
 /* 23.4.16 */
 acl_t
-acl_get_file(const char *path_p, acl_type_t type)
+__acl_get_file(const char *path_p, acl_type_t type,
+	     ssize_t (*getxattr_fun)(const char *, const char *,
+				   void *, size_t),
+	     ssize_t (*stat_fun)(const char *, struct stat *))
 {
 	const size_t size_guess = acl_ea_size(16);
 	char *ext_acl_p = alloca(size_guess);
@@ -54,14 +57,14 @@ acl_get_file(const char *path_p, acl_type_t type)
 
 	if (!ext_acl_p)
 		return NULL;
-	retval = getxattr(path_p, name, ext_acl_p, size_guess);
+	retval = getxattr_fun(path_p, name, ext_acl_p, size_guess);
 	if (retval == -1 && errno == ERANGE) {
-		retval = getxattr(path_p, name, NULL, 0);
+		retval = getxattr_fun(path_p, name, NULL, 0);
 		if (retval > 0) {
 			ext_acl_p = alloca(retval);
 			if (!ext_acl_p)
 				return NULL;
-			retval = getxattr(path_p, name, ext_acl_p, retval);
+			retval = getxattr_fun(path_p, name, ext_acl_p, retval);
 		}
 	}
 	if (retval > 0) {
@@ -70,7 +73,7 @@ acl_get_file(const char *path_p, acl_type_t type)
 	} else if (retval == 0 || errno == ENOATTR || errno == ENODATA) {
 		struct stat st;
 
-		if (stat(path_p, &st) != 0)
+		if (stat_fun(path_p, &st) != 0)
 			return NULL;
 
 		if (type == ACL_TYPE_DEFAULT) {
