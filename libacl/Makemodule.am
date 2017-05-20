@@ -18,7 +18,9 @@ HFILES = \
 	libacl/__acl_from_xattr.h \
 	libacl/__acl_to_xattr.h \
 	libacl/perm_copy.h \
-	libacl/__acl_extended_file.h
+	libacl/__acl_extended_file.h \
+	libacl/__acl_get_file.h \
+	libacl/__acl_set_file.h
 
 POSIX_CFILES = \
 	libacl/acl_add_perm.c \
@@ -62,7 +64,9 @@ LIBACL_CFILES = \
 	libacl/acl_extended_file_nofollow.c \
 	libacl/acl_from_mode.c \
 	libacl/acl_to_any_text.c \
-	libacl/__acl_extended_file.c
+	libacl/__acl_extended_file.c \
+	libacl/__acl_get_file.c \
+	libacl/__acl_set_file.c 
 
 INTERNAL_CFILES = \
 	libacl/__acl_from_xattr.c \
