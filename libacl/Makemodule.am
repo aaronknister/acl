@@ -63,6 +63,8 @@ LIBACL_CFILES = \
 	libacl/acl_extended_file.c \
 	libacl/acl_extended_file_nofollow.c \
 	libacl/acl_from_mode.c \
+	libacl/acl_get_file_nofollow.c \
+	libacl/acl_set_file_nofollow.c \
 	libacl/acl_to_any_text.c \
 	libacl/__acl_extended_file.c \
 	libacl/__acl_get_file.c \
