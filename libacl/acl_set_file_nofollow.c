@@ -18,6 +18,7 @@
 
 #include "config.h"
 #include <unistd.h>
+#include <sys/stat.h>
 #include <sys/xattr.h>
 #include "libacl.h"
 
