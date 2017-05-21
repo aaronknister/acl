@@ -63,7 +63,9 @@ EXPORT int acl_extended_file_nofollow(const char *path_p);
 EXPORT int acl_extended_fd(int fd);
 EXPORT int acl_entries(acl_t acl);
 EXPORT const char *acl_error(int code);
+EXPORT acl_t acl_get_file_nofollow(const char *path_p, acl_type_t type);
 EXPORT int acl_get_perm(acl_permset_t permset_d, acl_perm_t perm);
+EXPORT int acl_set_file_nofollow(const char *path_p, acl_type_t type, acl_t acl);
 
 /* Copying permissions between files */
 struct error_context;
