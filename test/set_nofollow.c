@@ -6,18 +6,6 @@
 #include <stdio.h>
 #include <string.h>
 
-/* 
-
-Test to demonstrate that operating on a symbolic link doesn't affect the target of the link
-
-1. Create file "a", then create a symlink "b" that points to it
-2. Set an ACL on file a and spit it out in short hand format
-3. Attempt to read symlinkk and ensure it doesn't match
-4. Then set an ACL on symlink b, re-read symlink on file a
-   and verify it hasn't changed
-
-*/
-
 int main(int argc, char **argv) {
 
 	char *filePath;
