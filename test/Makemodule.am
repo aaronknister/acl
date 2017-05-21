@@ -29,12 +29,11 @@ EXTRA_DIST += \
 check_LTLIBRARIES = libtestlookup.la
 check_PROGRAMS = test/get_nofollow test/set_nofollow
 
+prog_ldadd = $(LDADD) libacl.la libmisc.la
 test_get_nofollow_SOURCES = test/get_nofollow.c
-test_get_nofollow_LDFLAGS = -static
-test_get_nofollow_LDADD = libacl.la
+test_get_nofollow_LDADD = $(prog_ldadd)
 test_set_nofollow_SOURCES = test/set_nofollow.c
-test_set_nofollow_LDFLAGS = -static
-test_set_nofollow_LDADD = libacl.la
+test_set_nofollow_LDADD = $(prog_ldadd)
 
 libtestlookup_la_SOURCES = test/test_passwd.c test/test_group.c
 libtestlookup_la_CFLAGS = -DBASEDIR=\"$(abs_srcdir)\"

@@ -22,7 +22,7 @@ int main(int argc, char **argv) {
 
 	char *filePath;
 	char *aclText;
-	int rc;
+	int rc, entryIdx;
 	acl_t acl=NULL;
 	acl_entry_t entry=NULL;
 	acl_permset_t permset;
@@ -31,9 +31,13 @@ int main(int argc, char **argv) {
 	filePath = argv[1];
 	aclText = argv[2];
 	
-	acl = acl_from_text(aclText);
-	if ( acl == (acl_t)NULL ) {
-		fprintf(stderr, "Failed to generate acl from text: %s\n", strerror(errno));
+	acl = acl_from_text(argv[2]);
+	rc = acl_check(acl, &entryIdx);
+	if (rc < 0) {
+		fprintf(stderr, "%s - %s\n", aclText, strerror(errno));
+			goto fail;
+	} else if (rc > 0) {
+		fprintf(stderr, "access ACL '%s': %s at entry %d\n", aclText, acl_error(rc), entryIdx);
 		goto fail;
 	}
 

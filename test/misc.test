@@ -521,12 +521,17 @@ Don't follow symlinks when using acl_{get,set}_file_nofollow
 	$ get_nofollow b
 	> u::rwx,g::rwx,o::rwx
 	$ set_nofollow b u::rwx,u:daemon:rwx,g::rwx,o::rwx
-	> Failed to set acl on file `b': Invalid argument
+	> access ACL 'u::rwx,u:daemon:rwx,g::rwx,o::rwx': Missing or wrong entry at entry 3
 	$ set_nofollow b u::rwx,u:daemon:rwx,g::rwx,m::rwx,o::rwx
 	$ get_nofollow b
 	> u::rwx,u:daemon:rwx,g::rwx,m::rwx,o::rwx
 	$ get_nofollow a
 	> u::rw-,u:bin:r-x,g::rw-,m::rwx,o::r--
+
+Confirm that acl_{get,set}_file_nofollow work on normal files
+
 	$ set_nofollow a u::rw-,u:daemon:r-x,g::rw-,m::rwx,o::r--
 	$ get_nofollow a
 	> u::rw-,u:daemon:r-x,g::rw-,m::rwx,o::r--
+
+	$ rm a b
